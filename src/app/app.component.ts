@@ -12,7 +12,7 @@ import { AppService } from './app.service';
   `
 })
 export class AppComponent implements OnInit {
-  title = 'game-loop-rxjs';
+  title = 'idle-demo';
 
   constructor(private appService: AppService) {}
 

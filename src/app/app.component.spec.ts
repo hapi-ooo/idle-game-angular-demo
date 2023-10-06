@@ -12,16 +12,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'game-loop-rxjs'`, () => {
+  it(`should have as title 'idle-demo'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('game-loop-rxjs');
+    expect(app.title).toEqual('idle-demo');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('game-loop-rxjs app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('idle-demo app is running!');
   });
 });
