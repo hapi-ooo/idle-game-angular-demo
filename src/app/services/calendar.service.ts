@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject, of } from "rxjs";
-import { TickService } from "../tick.service";
-import { DependentService, ServiceInitStatus } from "../services.model";
+import { TickService } from "./tick.service";
+import { DependentService, ServiceInitStatus } from "./services.model";
 
 const CALENDAR_TICK_FREQUENCY = 5;
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CalendarService extends DependentService {
   private calendarSub: Subject<number> = new Subject();
 

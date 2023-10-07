@@ -1,18 +1,13 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Resource } from '../resources.model';
-
-export const OwnedResourcesActions = createActionGroup({
-  source: 'OwnedResources',
-  events: {
-    'Add Resource': props<{ resource: Resource }>(),
-    'Remove Resource': props<{ resource: Resource }>(),
-    'Tick Owned Resources': emptyProps(),
-  },
-});
+import { Resource, OwnedResource } from '../resources.model';
 
 export const ResourcesActions = createActionGroup({
   source: 'Resources',
   events: {
-    'Retrieved Resource List': props<{ resources: ReadonlyArray<string>}>(),
+    'Add Resource': props<{ resource: Resource }>(),
+    'Remove Resource': props<{ resource: Resource }>(),
+    'Tick Owned Resources': emptyProps(),
+    'Initialize Resources': 
+      props<{ resources: ReadonlyArray<OwnedResource> }>(),
   },
 });

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TickService {
   private initialized: boolean = false;
   private tickCountSub: BehaviorSubject<number> = new BehaviorSubject(0);

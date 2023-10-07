@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { TickService } from "./tick.service";
-import { CalendarService } from "./calendar/calendar.service";
+import { CalendarService } from "./calendar.service";
 import { Observable, of, zip } from "rxjs";
-import { ResourcesService } from "./resources/resources.service";
+import { ResourcesService } from "./resources.service";
 import { ServiceInitStatus } from "./services.model";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AppService {
 
   private initialized: boolean = false;

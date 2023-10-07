@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { CalendarService } from "./calendar.service";
+import { CalendarService } from "../services/calendar.service";
 import { Observable } from "rxjs";
 
 const SEASON_LENGTH = 100;

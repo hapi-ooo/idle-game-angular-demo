@@ -1,29 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { AppService } from './app.service';
-import { OwnedResourcesActions } from './resources/state/resources.actions';
+import { Component, Injector, OnInit } from '@angular/core';
+import { AppService } from './services/app.service';
+import { ResourcesActions } from './resources/state/resources.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { OwnedResource } from './resources/resources.model';
-import { selectOwnedResources } from './resources/state/resources.selector';
+import { PopupService } from './services/popup.service';
+import { createCustomElement } from '@angular/elements';
+import { PopupComponent } from './popup/popup.component';
+import { selectResources } from './resources/state/resources.selector';
 
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
   // styleUrls: ['./app.component.css']
+  styles: [`
+    div {
+      margin: 10px;
+      height: 2px;
+      border-top: solid 2px black;
+    }
+  `],
   template: `
     <calendar></calendar>
     <br />
-    <resources [ownedResources]="(ownedResources$ | async)!"></resources>
+    <resources [resources]="(resources$ | async)!"></resources>
     <button (click)="addBug()">Catch Bug</button>
     <button (click)="addFruit()">Harvest Fruit</button>
+    <div ></div>
+    <input #input value="Message">
+    <button type="button"
+      (click)="popup.showAsComponent(input.value)">
+      Show as Component
+    </button>
+    <button type="button"
+      (click)="popup.showAsElement(input.value)">
+      Show as element
+    </button>
   `
 })
 export class AppComponent implements OnInit {
   title = 'idle-demo';
-  ownedResources$: Observable<ReadonlyArray<OwnedResource>> = this.store.select(selectOwnedResources);
+  resources$: Observable<ReadonlyArray<OwnedResource>> = this.store.select(selectResources);
 
-  constructor(private appService: AppService, private store: Store) {
-    this.ownedResources$.subscribe(v => console.log(v));
+  constructor(private appService: AppService, 
+              private injector: Injector,
+              private store: Store,
+              public popup: PopupService
+  ) {
+    // Convert `PopupComponent` to a custom element.
+    const PopupElement = createCustomElement(PopupComponent, {injector});
+
+    // Register the custom element with the browser.
+    customElements.define('popup-element', PopupElement);
   }
 
   ngOnInit(): void {
@@ -34,17 +62,18 @@ export class AppComponent implements OnInit {
   }
 
   addBug = () => {
-    this.store.dispatch(OwnedResourcesActions.addResource({resource: {
+    this.store.dispatch(ResourcesActions.addResource({resource: {
       id: 'Bugs',
       amount: 1,
     }}));
   }
 
   addFruit = () => {
-    this.store.dispatch(OwnedResourcesActions.addResource({resource: {
+    this.store.dispatch(ResourcesActions.addResource({resource: {
       id: 'Fruit',
       amount: 0.2,
     }}));
+    this.resources$.subscribe(v  => console.log(v)).unsubscribe();
   }
 }
 

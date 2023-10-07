@@ -1,14 +1,15 @@
 import { Injectable } from "@angular/core";
-import { DependentService, ServiceInitStatus } from "../services.model";
-import { TickService } from "../tick.service";
+import { DependentService, ServiceInitStatus } from "./services.model";
+import { TickService } from "./tick.service";
 import { Observable, of } from "rxjs";
-import { ResourceList } from "./resources.data";
+import { ResourceList } from "../resources/resources.data";
 import { Store } from "@ngrx/store";
-import { OwnedResourcesActions, ResourcesActions } from "./state/resources.actions";
+import { ResourcesActions } from "../resources/state/resources.actions";
+import { OwnedResource } from "../resources/resources.model";
 
 const RESOURCE_TICK_FREQUENCY = 4;
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ResourcesService extends DependentService {
   private resourceTick: number = 0;
 
@@ -19,16 +20,12 @@ export class ResourcesService extends DependentService {
   Init(): Observable<ServiceInitStatus> {
     this.initialized = true;
 
-    // Dispatch the full list of Resources for later reference
-    let resources = this.getResourceList();
-    this.store.dispatch(ResourcesActions.retrievedResourceList({ resources }));
-
     this.tickService.OnTick().subscribe({
       next: _ => {
         this.resourceTick++;
         if (this.resourceTick % RESOURCE_TICK_FREQUENCY === 0) {
           this.resourceTick = 0;
-          this.store.dispatch(OwnedResourcesActions.tickOwnedResources());
+          this.store.dispatch(ResourcesActions.tickOwnedResources());
         }
       },
       error: err => this.logServiceError(err),
@@ -36,7 +33,7 @@ export class ResourcesService extends DependentService {
     return of(this.getServiceInitStatus());
   }
 
-  getResourceList(): ReadonlyArray<string> {
+  getResourceList(): Readonly<OwnedResource[]> {
     return ResourceList;
   }
 }
