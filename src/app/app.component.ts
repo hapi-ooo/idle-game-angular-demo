@@ -3,7 +3,7 @@ import { AppService } from './services/app.service';
 import { ResourcesActions } from './resources/state/resources.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { OwnedResource } from './resources/resources.model';
+import { Resource } from './resources/resources.model';
 import { PopupService } from './services/popup.service';
 import { createCustomElement } from '@angular/elements';
 import { PopupComponent } from './popup/popup.component';
@@ -40,7 +40,7 @@ import { selectResources } from './resources/state/resources.selector';
 })
 export class AppComponent implements OnInit {
   title = 'idle-demo';
-  resources$: Observable<ReadonlyArray<OwnedResource>> = this.store.select(selectResources);
+  resources$: Observable<ReadonlyArray<Resource>> = this.store.select(selectResources);
 
   constructor(private appService: AppService, 
               private injector: Injector,
@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(ResourcesActions.addResource({resource: {
       id: 'Bugs',
       amount: 1,
+      changePerSecond: 0,
     }}));
   }
 
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(ResourcesActions.addResource({resource: {
       id: 'Fruit',
       amount: 0.2,
+      changePerSecond: 0,
     }}));
     this.resources$.subscribe(v  => console.log(v)).unsubscribe();
   }

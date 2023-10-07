@@ -1,46 +1,34 @@
-import { OwnedResource } from "./resources.model";
+import { Resource } from "./resources.model";
 
-export const ResourceList: ReadonlyArray<OwnedResource> = [
+export const ResourceList: ReadonlyArray<Resource> = [
   {
-    resource: {
-      id: 'Bugs',
-      amount: 0,
-    },
+    id: 'Bugs',
+    amount: 0,
     changePerSecond: 0,
   },
   {
-    resource: {
-      id: 'Fruit',
-      amount: 0,
-    },
+    id: 'Fruit',
+    amount: 0,
     changePerSecond: 0,
   },
   {
-    resource: {
-      id: 'Sticks',
-      amount: 0,
-    },
+    id: 'Sticks',
+    amount: 0,
     changePerSecond: 0,
   },
   {
-    resource: {
-      id: 'Mud',
-      amount: 0,
-    },
+    id: 'Mud',
+    amount: 0,
     changePerSecond: 0,
   },
   {
-    resource: {
-      id: 'Scales',
-      amount: 0,
-    },
+    id: 'Scales',
+    amount: 0,
     changePerSecond: 0,
   },
   {
-    resource: {
-      id: 'Intelligence',
-      amount: 0,
-    },
+    id: 'Intelligence',
+    amount: 0,
     changePerSecond: 0,
   },
 ];

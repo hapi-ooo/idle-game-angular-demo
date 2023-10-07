@@ -5,7 +5,7 @@ import { Observable, of } from "rxjs";
 import { ResourceList } from "../resources/resources.data";
 import { Store } from "@ngrx/store";
 import { ResourcesActions } from "../resources/state/resources.actions";
-import { OwnedResource } from "../resources/resources.model";
+import { Resource } from "../resources/resources.model";
 
 const RESOURCE_TICK_FREQUENCY = 4;
 
@@ -33,7 +33,7 @@ export class ResourcesService extends DependentService {
     return of(this.getServiceInitStatus());
   }
 
-  getResourceList(): Readonly<OwnedResource[]> {
+  getResourceList(): Readonly<Resource[]> {
     return ResourceList;
   }
 }
