@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { TickService } from "./tick.service";
 import { CalendarService } from "./calendar/calendar.service";
-import { Observable, OperatorFunction, of, zip } from "rxjs";
+import { Observable, of, zip } from "rxjs";
 import { ResourcesService } from "./resources/resources.service";
 import { ServiceInitStatus } from "./services.model";
 

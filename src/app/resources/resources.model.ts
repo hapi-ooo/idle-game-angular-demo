@@ -1,4 +1,9 @@
 export interface Resource {
   id: string;
-  tickIncrement: number;
+  amount: number;
+}
+
+export interface OwnedResource {
+  resource: Resource;
+  changePerSecond: number;
 }

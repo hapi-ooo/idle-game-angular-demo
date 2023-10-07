@@ -1,39 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { Resource } from "./resources.model";
-import { ResourcesService } from "./resources.service";
+import { Component, Input } from "@angular/core";
+import { OwnedResource } from "./resources.model";
 
 @Component({
   selector: 'resources',
   template: `
-    {{r1Name + ': '}}{{GetAmount() | number: '1.2-2'}}
-    <br />
-    <button (click)="Flip()">Reverse Sign</button>
+    <div *ngFor="let resource of ownedResources">
+      <span>{{resource.resource.id + '   '}} {{resource.resource.amount | number: "1.2-2"}}</span>
+      <p>{{resource.changePerSecond}}</p>
+    </div>
   `
 })
-export class ResourcesComponent implements OnInit {
-  private r1Amount: number = 0;
-  r1Name: string = 'Resource';
-
-  private resourcesTick$: Observable<Resource> = new Observable();
-
-  constructor(private resourcesService: ResourcesService) {}
-
-  ngOnInit(): void {
-    this.resourcesTick$ = this.resourcesService.OnResourceTick();
-    this.resourcesTick$.subscribe({
-      next: resource => {
-        this.r1Amount += resource.tickIncrement;
-      },
-      error: err => console.error("Error in Resource Component: " + err)
-    });
-  }
-
-  Flip(): void {
-    this.resourcesService.Flip();
-  }
-
-  GetAmount(): number {
-    return this.r1Amount;
-  }
+export class ResourcesComponent {
+  @Input()
+  get ownedResources(): ReadonlyArray<OwnedResource> { return this._ownedResources; }
+  set ownedResources(ownedResources: ReadonlyArray<OwnedResource>)
+    { this._ownedResources = ownedResources; }
+  private _ownedResources: ReadonlyArray<OwnedResource> = [];
 }
